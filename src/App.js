@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Table from "react-bootstrap/Table"
 import axios from "axios";
+import LoadingIcons from 'react-loading-icons'
 
 const operationList = {
 	en: ["search meanings", "search meanings(is a)", "search descriptions", "search synonyms", "search images", "search emoticons", "search relations", "search translations", "search hypernyms", "search hyponyms", "search holonyms", "search meronyms", "search parts", "search parts of"],
@@ -24,21 +25,25 @@ const labelList = {
 	ol: ["kies een woord om op te zoeken", "kies de taal van het woord", "kies waarnaar u wilt zoeken", "stel een limiet in", "kies de taal om naar te vertalen"]
 }
 
+const dev = "http://localhost:8080/"
 
-const senses = "http://localhost:8080/senses";
-const descriptions = "http://localhost:8080/descriptions";
-const trads = "http://localhost:8080/trads";
-const imgs = "http://localhost:8080/imgs";
-const emoticons = "http://localhost:8080/emoticons";
-const relations = "http://localhost:8080/relations";
-const synonyms = "http://localhost:8080/synonyms";
-const hypernyms = "http://localhost:8080/hypernyms";
-const hyponyms = "http://localhost:8080/hyponyms";
-const holonyms = "http://localhost:8080/holonyms";
-const meronyms = "http://localhost:8080/meronyms";
-const isA = "http://localhost:8080/isA";
-const partOf = "http://localhost:8080/partOf";
-const hasPart = "http://localhost:8080/hasPart";
+const build = "https://enchancing-lexical.herokuapp.com/"
+
+
+const senses = "senses";
+const descriptions = "descriptions";
+const trads = "trads";
+const imgs = "imgs";
+const emoticons = "emoticons";
+const relations = "relations";
+const synonyms = "synonyms";
+const hypernyms = "hypernyms";
+const hyponyms = "hyponyms";
+const holonyms = "holonyms";
+const meronyms = "meronyms";
+const isA = "isA";
+const partOf = "partOf";
+const hasPart = "hasPart";
 
 const wordCloudAnimator = (arr) => {
 	if (arr.length > 0) {
@@ -49,6 +54,7 @@ const wordCloudAnimator = (arr) => {
 }
 function App() {
 
+	const [ready, setReady] = useState(true)
 	const [labels, setlabels] = useState(labelList["en"])
 	const [operations, setOperations] = useState(operationList["en"])
 	const [limit, setlimit] = useState(10)
@@ -182,50 +188,51 @@ function App() {
 	}
 
 	const handleClick = () => {
+		setReady(false)
 		reset()
-		let request = ""
+		let request = build
 		switch (operation) {
 			case "senses":
-				request = senses
+				request += senses
 				break;
 			case "synonyms":
-				request = synonyms
+				request += synonyms
 				break;
 			case "imgs":
-				request = imgs
+				request += imgs
 				break;
 			case "emotes":
-				request = emoticons
+				request += emoticons
 				break;
 			case "rel":
-				request = relations
+				request += relations
 				break;
 			case "trads":
-				request = trads
+				request += trads
 				break;
 			case "hyponyms":
-				request = hyponyms
+				request += hyponyms
 				break;
 			case "hypernyms":
-				request = hypernyms
+				request += hypernyms
 				break;
 			case "holonyms":
-				request = holonyms
+				request += holonyms
 				break;
 			case "meronyms":
-				request = meronyms
+				request += meronyms
 				break;
 			case "descriptions":
-				request = descriptions
+				request += descriptions
 				break;
 			case "isA":
-				request = isA
+				request += isA
 				break;
 			case "partOf":
-				request = partOf
+				request += partOf
 				break;
 			case "hasPart":
-				request = hasPart
+				request += hasPart
 				break;
 		}
 
@@ -235,6 +242,7 @@ function App() {
 			langs: trad,
 			limit: limit
 		}).then((res) => {
+			setReady(true)
 			res.data.data.forEach(element => {
 				switch (operation) {
 					case "senses":
@@ -727,6 +735,8 @@ function App() {
 				</Form.Group>
 				<Button onClick={ handleClick }>GO</Button>
 			</Form>
+			<div hidden={ ready }><LoadingIcons.Circles />
+				<p>LOADING...</p></div>
 			<Table responsive striped bordered hover variant="dark">
 				<thead>
 					<tr>
