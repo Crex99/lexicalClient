@@ -1,12 +1,10 @@
 
 import './App.css';
 import React from "react";
-import ReactWordcloud from 'react-wordcloud';
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button"
 import "bootstrap/dist/css/bootstrap.min.css"
 import Table from "react-bootstrap/Table"
-import axios from "axios";
 import LoadingIcons from 'react-loading-icons'
 
 
@@ -53,9 +51,7 @@ function App({ changeMode, mode, labels, handleLang, ready, handleWord, handleLi
 			<tbody>
 				<tr>
 					<td>
-						{ results.map((element) => {
-							return (<div>{ element }</div>)
-						}) }
+						{ wordCloudAnimator(results) }
 					</td>
 				</tr>
 			</tbody>

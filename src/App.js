@@ -11,11 +11,11 @@ import LoadingIcons from 'react-loading-icons'
 import InspiratingMode from './InspiratingMode';
 
 const operationList = {
-	en: ["search meanings", "search meanings(is a)", "search descriptions", "search synonyms", "search images", "search emoticons", "search relations", "search translations", "search hypernyms", "search hyponyms", "search holonyms", "search meronyms", "search parts", "search parts of"],
-	it: ["Cerca accezioni", "Cerca accezioni(è un)", "Cerca descrizioni", "Cerca sinonimi", "Cerca immagini", "Cerca emoticons", "Cerca relazioni", "Cerca traduzioni", "Cerca iperonimi", "Cerca iponimi", "Cerca olonimi", "Cerca meronimi", "Cerca parti", "Cerca parti di"],
-	fr: ["cherche senses", "cherce senses(est un)", "cherche descriptions", "cerche synonymes", "cherche images", "cherche emoticones", "cherche relationes", "cherche traductiones", "cherche hyperonymes", "cherche holonymes", "cherche meronymes", "cherche parties", "cherche parties de"],
-	de: ["suchen nach bedeutung", "suchen nach bedeutung(es ist ein)", "suchen nach beschreibung", "suchen nach synonyme", "suchen nach bilder", "suchen nach emoticons", "suchen nach beziehungen", "suchen nach ubersetzungen", "suchen nach hyperonyme", "suchen nach holonyme", "suchen nach meronyme", "suchen nach losfahren", "suchen nach losfahren von"],
-	ol: ["zoeken naar betekenissen", "zoeken naar betekenissen(het is een)", "zoeken naar beschrijvingen", "zoeken naar synoniemen", "zoeken naar afbeeldingen", "zoeken naar emoticons", "zoeken naar relaties", "zoeken naar vertalingen", "zoeken naar hyperoniemen", "zoeken naar hyponiemen", "zoeken naar holoniemen", "zoeken naar meroniemen", "zoeken naar vertrek", "zoeken naar onderdelen van"]
+	en: ["search meanings", "search meanings(is a)", "search descriptions", "search synonyms", "search images", "search emoticons", "search relations", "search translations", "search hypernyms", "search hyponyms", "search holonyms", "search meronyms", "search similarities"],
+	it: ["Cerca accezioni", "Cerca accezioni(è un)", "Cerca descrizioni", "Cerca sinonimi", "Cerca immagini", "Cerca emoticons", "Cerca relazioni", "Cerca traduzioni", "Cerca iperonimi", "Cerca iponimi", "Cerca olonimi", "Cerca meronimi", "Cerca analogie"],
+	fr: ["cherche senses", "cherce senses(est un)", "cherche descriptions", "cerche synonymes", "cherche images", "cherche emoticones", "cherche relationes", "cherche traductiones", "cherche hyperonymes", "cherche holonymes", "cherche meronymes", "cherche similuteds"],
+	de: ["suchen nach bedeutung", "suchen nach bedeutung(es ist ein)", "suchen nach beschreibung", "suchen nach synonyme", "suchen nach bilder", "suchen nach emoticons", "suchen nach beziehungen", "suchen nach ubersetzungen", "suchen nach hyperonyme", "suchen nach holonyme", "suchen nach meronyme", "suchen nach Ähnlichkeiten"],
+	ol: ["zoeken naar betekenissen", "zoeken naar betekenissen(het is een)", "zoeken naar beschrijvingen", "zoeken naar synoniemen", "zoeken naar afbeeldingen", "zoeken naar emoticons", "zoeken naar relaties", "zoeken naar vertalingen", "zoeken naar hyperoniemen", "zoeken naar hyponiemen", "zoeken naar holoniemen", "zoeken naar meroniemen", "zoeken naar overeenkomsten"]
 }
 
 const labelList = {
@@ -43,8 +43,7 @@ const hyponyms = "hyponyms";
 const holonyms = "holonyms";
 const meronyms = "meronyms";
 const isA = "isA";
-const partOf = "partOf";
-const hasPart = "hasPart";
+const similarities = "similarities";
 const inspiration = "inspiration";
 
 const wordCloudAnimator = (arr) => {
@@ -118,7 +117,9 @@ function App() {
 	const [holonymsConcept, setHolonymsC] = useState([])
 	const [meronymsConcept, setMeronymsC] = useState([])
 	const [descriptionsConcept, setDescriptionsC] = useState([])
+	const [similaritiesConcept, setSimilaritiesC] = useState([])
 	const reset = () => {
+		setSimilaritiesC([])
 		setmessage("")
 		setResults([])
 		setRelsDBP([])
@@ -253,15 +254,11 @@ function App() {
 				case "isA":
 					request += isA
 					break;
-				case "partOf":
-					request += partOf
-					break;
-				case "hasPart":
-					request += hasPart
+				case "similarities":
+					request += similarities
 					break;
 				case "inspirating":
 					request += inspiration
-					console.log("inspiration")
 					break;
 			}
 
@@ -716,15 +713,35 @@ function App() {
 						case "inspirating":
 
 							if (element.source === "BABELNET") {
+								let set = new Set()
 								element.inf.forEach(element => {
 									console.log(element.datas)
 									element.datas.forEach(element => {
-										inspireSet.add(element)
+										set.add(element)
 									});
 
 								});
+								set.forEach(element => {
+									inspireSet.add({ text: element, value: 64 })
+								});
 							}
 							break;
+						case "similarities":
+
+							if (element.source === "CONCEPTNET") {
+								setConceptTime(element.time)
+								let set = new Set()
+								let arr = []
+								element.inf.forEach(element => {
+
+									set.add(element.word)
+								});
+
+								set.forEach(element => {
+									arr.push(element)
+								});
+								setSimilaritiesC(arr)
+							}
 					}
 
 				});
@@ -734,6 +751,7 @@ function App() {
 
 				setResults(inspireArr)
 			}).catch((err) => {
+				setReady(true)
 				console.log("err", err)
 			})
 		}
@@ -771,8 +789,7 @@ function App() {
 							<option value="hyponyms">{ operations[9] }</option>
 							<option value="holonyms">{ operations[10] }</option>
 							<option value="meronyms">{ operations[11] }</option>
-							<option value="hasPart">{ operations[12] }</option>
-							<option value="partOf">{ operations[13] }</option>
+							<option value="similarities">{ operations[12] }</option>
 						</Form.Select>
 						<Form.Label >{ labels[3] }</Form.Label>
 						<Form.Control id="limit" type="number" placeholder="10" onChange={ handleLimit }></Form.Control>
@@ -973,6 +990,11 @@ function App() {
 							<td>
 								{ wordCloudAnimator(synsConcept) }
 								<ul>
+									{ similaritiesConcept.map((element) => {
+										return (
+											<li>{ element }</li>
+										)
+									}) }
 									{ sensesConcept.map((element) => {
 										return (
 											<li>{ element.word }</li>
