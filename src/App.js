@@ -216,7 +216,7 @@ function App() {
 		} else {
 			setReady(false)
 			reset()
-			let request = dev
+			let request = build
 			switch (operation) {
 				case "senses":
 					request += senses
