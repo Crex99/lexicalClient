@@ -300,7 +300,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.descriptions.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									})
 								});
@@ -324,7 +324,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.descriptions.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									})
 								});
@@ -359,7 +359,7 @@ function App() {
 								setWikiTime(element.time)
 								let arr = []
 								element.inf.forEach(element => {
-									element.synonyms.forEach(element => {
+									element.datas.forEach(element => {
 										arr.push({ text: element, value: 64 })
 									});
 								});
@@ -379,7 +379,7 @@ function App() {
 
 								element.inf.forEach(element => {
 
-									element.synonyms.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 
@@ -411,7 +411,7 @@ function App() {
 
 								let arr = []
 								element.inf.forEach(element => {
-									element.images.forEach(element => {
+									element.datas.forEach(element => {
 										arr.push(element.url)
 									});
 								});
@@ -436,7 +436,7 @@ function App() {
 								let arr = []
 								element.inf.forEach(element => {
 									console.log(element.emotes)
-									element.emotes.forEach(element => {
+									element.datas.forEach(element => {
 										arr.push(element)
 									});
 								});
@@ -448,7 +448,7 @@ function App() {
 								let arr = []
 
 								element.inf.forEach(element => {
-									element.emotes.forEach(element => {
+									element.datas.forEach(element => {
 										arr.push(element)
 									})
 								});
@@ -484,7 +484,7 @@ function App() {
 								let arr = []
 
 								element.inf.forEach(element => {
-									element.relations.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 								});
@@ -511,7 +511,7 @@ function App() {
 								console.log("request", request)
 								console.log(element.inf)
 								element.inf.forEach(element => {
-									element.trads.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element.content)
 
 									});
@@ -535,7 +535,7 @@ function App() {
 								setBabelTime(element.time)
 								let arr = []
 								element.inf.forEach(element => {
-									element.trads.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element.content)
 
 									});
@@ -552,7 +552,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 								});
@@ -580,7 +580,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 								});
@@ -609,7 +609,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 								});
@@ -637,7 +637,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 								});
@@ -658,7 +658,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 
@@ -678,7 +678,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 
@@ -697,7 +697,7 @@ function App() {
 								let set = new Set()
 								let arr = []
 								element.inf.forEach(element => {
-									element.hierarchy.forEach(element => {
+									element.datas.forEach(element => {
 										set.add(element)
 									});
 
