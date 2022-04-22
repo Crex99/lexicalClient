@@ -810,22 +810,14 @@ function App() {
 				<Table responsive striped bordered hover variant="dark">
 					<thead>
 						<tr>
-							<th>WIKIDATA</th>
-							<th>DBNARY</th>
-							<th>DBPEDIA</th>
-							<th>BABELNET</th>
-							<th>CONCEPTNET</th>
+							<th>RESULT 1</th>
+							<th>RESULT 2</th>
+							<th>RESULT 3</th>
+							<th>RESULT 4</th>
+							<th>RESULT 5</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>TIME:{ WikiTime }ms</td>
-							<td>TIME:{ DBNTime }ms</td>
-							<td>TIME:{ DBPTime }ms</td>
-							<td>TIME:{ BabelTime }ms</td>
-							<td>TIME:{ ConceptTime }ms</td>
-						</tr>
-
 						<tr>
 							<td>
 								<ul>
